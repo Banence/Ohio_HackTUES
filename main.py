@@ -38,14 +38,6 @@ D4_WIDTH, D4_HEIGHT = 880, 503
 D5_WIDTH, D5_HEIGHT = 1174, 503
 D6_WIDTH, D6_HEIGHT = 768, 285
 
-# Colors for the squares
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-YELLOW = (255, 255, 0)
-CYAN = (0, 255, 255)
-MAGENTA = (255, 0, 255)
-
 squares = [
     pygame.Rect((D1_WIDTH, D1_HEIGHT), (CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT)),
     pygame.Rect((D2_WIDTH, D2_HEIGHT), (CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT)),
@@ -55,7 +47,6 @@ squares = [
     pygame.Rect((D6_WIDTH, D6_HEIGHT), (CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT))
 ]
 
-# Create a list to keep track of the state of each square
 square_states = [False] * len(squares)
 
 def draw_window(tab):
@@ -63,9 +54,6 @@ def draw_window(tab):
     SCR.blit(TAB, (tab.x, tab.y))
     SCR.blit(INTRO_TEXT, (20, 40))
     SCR.blit(MAIN, (WIDTH//2 - MAIN_WIDTH// 2, HEIGHT//2 - MAIN_HEIGHT// 2 - 106))
-    
-    
-   
 
 def main():
     tab = pygame.Rect(WIDTH//2 - TAB_WIDTH//2, HEIGHT - TAB_HEIGHT, TAB_WIDTH, TAB_HEIGHT)
@@ -79,13 +67,10 @@ def main():
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                # Check if the user clicked on a square
                 for i, square in enumerate(squares):
                     if square.collidepoint(event.pos):
-                        # Toggle the state of the square
                         square_states[i] = not square_states[i]
         
-        # Draw the squares onto the screen
         for i, square in enumerate(squares):
             if square_states[i]: 
                 image = CLOSED_DOOR    
