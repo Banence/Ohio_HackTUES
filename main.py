@@ -20,11 +20,26 @@ MAIN_IMAGE = pygame.image.load(os.path.join('Images', 'houseWColorAndPickture.pn
 MAIN_WIDTH, MAIN_HEIGHT = 1030, 740
 MAIN = pygame.transform.scale(MAIN_IMAGE, (MAIN_WIDTH, MAIN_HEIGHT))
 
+
+OPENED_DOOR_IMAGE = pygame.image.load(os.path.join('Images','DoorOpenedColored.png'))
+OPENED_DOOR_WIDTH, OPENED_DOOR_HEIGHT = 60, 100
+OPENED_DOOR = pygame.transform.scale(OPENED_DOOR_IMAGE, (OPENED_DOOR_WIDTH, OPENED_DOOR_HEIGHT))
+
+CLOSED_DOOR_IMAGE = pygame.image.load(os.path.join('Images','DoorClosedColored.png'))
+CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT = 60, 100
+CLOSED_DOOR = pygame.transform.scale(CLOSED_DOOR_IMAGE, (CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT))
+
 def draw_window(tab):
     SCR.fill(COL)
     SCR.blit(TAB, (tab.x, tab.y))
     SCR.blit(INTRO_TEXT, (20, 40))
     SCR.blit(MAIN, (WIDTH//2 - MAIN_WIDTH// 2, HEIGHT//2 - MAIN_HEIGHT// 2 - 106))
+    SCR.blit(OPENED_DOOR, (700, 695))
+    SCR.blit(OPENED_DOOR, (1074,695))
+    SCR.blit(OPENED_DOOR, (620, 503))
+    SCR.blit(OPENED_DOOR, (880, 503))
+    SCR.blit(OPENED_DOOR, (1174, 503))
+    SCR.blit(OPENED_DOOR, (768, 285))
     pygame.display.update()
 
 def main():
