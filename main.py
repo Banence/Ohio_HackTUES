@@ -85,11 +85,15 @@ def main():
                 for i, square in enumerate(squares):
                     if square.collidepoint(event.pos):
                         square_states[i] = not square_states[i]
-            elif event.type == pygame.KEYDOWN:
+            
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     paused = True # toggle pause state
                 elif event.key == pygame.K_SPACE:
                     paused = False # resume game
+                elif event.key == pygame.K_q and paused == True:
+                    pygame.quit()
+                    quit()
 
         if not paused: # game runs only if not paused
             for i, square in enumerate(squares):
@@ -131,7 +135,7 @@ def main():
             square_x += speed * direction
 
             # Check if square has reached end of screen
-            if square_x < 550 or square_x > 1350:
+            if square_x < 550 or square_x > 1300:
                 # Move square up and flip direction
                 if z != 0:
                     square_y -= 217
@@ -157,7 +161,7 @@ def main():
             # display pause screen
             SCR.blit(GREY, (WIDTH//2 - GREY.get_width()//2, HEIGHT//2 - GREY.get_height()//2))
             font = pygame.font.SysFont('comicsans', 50)
-            text = font.render('Game Paused (Press SPACE to Resume, ALT + F4 to QUIT)', True, (255, 255, 255))
+            text = font.render('Game Paused (Press "SPACE" to resume or "Q" to QUIT)', True, (69, 69, 69))
             SCR.blit(text, (WIDTH//2 - text.get_width()//2, HEIGHT//2 - text.get_height()//2))
             pygame.display.update()
 
@@ -165,7 +169,7 @@ def main():
         SCR.blit(TAB, (tab.x, tab.y))
         SCR.blit(MAIN, (WIDTH//2 - MAIN_WIDTH// 2, HEIGHT//2 - MAIN_HEIGHT// 2 - 106))
         SCR.blit(PLAYER, (1380, 265))
-
+        
 main()
 
 if __name__ == "__main__":
