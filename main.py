@@ -126,6 +126,8 @@ def main():
                     elif event.key == pygame.K_q and paused == True:
                         pygame.quit()
                         quit()
+                    elif event.key == pygame.K_r and paused == True:
+                        main()
 
             if not paused: # game runs only if not paused
                 for i, square in enumerate(squares):
@@ -193,7 +195,7 @@ def main():
                 # display pause screen
                 SCR.blit(GREY, (WIDTH//2 - GREY.get_width()//2, HEIGHT//2 - GREY.get_height()//2))
                 font = pygame.font.SysFont('comicsans', 50)
-                text = font.render('Game Paused (Press "SPACE" to resume or "Q" to QUIT)', True, (69, 69, 69))
+                text = font.render('Game Paused (Press "SPACE" to resume or "Q" to QUIT or "R" to RESTART)', True, (69, 69, 69))
                 SCR.blit(text, (WIDTH//2 - text.get_width()//2, HEIGHT//2 - text.get_height()//2))
                 pygame.display.update()
 
