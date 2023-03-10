@@ -27,9 +27,9 @@ CLOSED_DOOR_IMAGE = pygame.image.load(os.path.join('images','DoorClosedColored.p
 CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT = 20, 100
 CLOSED_DOOR = pygame.transform.scale(CLOSED_DOOR_IMAGE, (CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT))
 
-MATRIX_BG = pygame.image.load(os.path.join('images', 'Grey.jpg'))
-MATRIX_BG_WIDTH, MATRIX_BG_HEIGHT = 1920, 1080
-MATRIX = pygame.transform.scale(MATRIX_BG, (MATRIX_BG_WIDTH, MATRIX_BG_HEIGHT))
+GREY_BG = pygame.image.load(os.path.join('images', 'Grey.jpg'))
+GREY_BG_WIDTH, MATRIX_BG_HEIGHT = 1920, 1080
+GREY = pygame.transform.scale(GREY_BG, (GREY_BG_WIDTH, MATRIX_BG_HEIGHT))
 
 
 D1_WIDTH, D1_HEIGHT = 700, 695
@@ -38,6 +38,18 @@ D3_WIDTH, D3_HEIGHT = 620, 503
 D4_WIDTH, D4_HEIGHT = 880, 503
 D5_WIDTH, D5_HEIGHT = 1174, 503
 D6_WIDTH, D6_HEIGHT = 768, 285
+
+THIEFCOLORED = pygame.image.load(os.path.join('images', 'ThiefColored.png'))
+THIEFCOLORED_WIDTH, THIEFCOLORED_HEIGHT = 70, 80
+THIEF = pygame.transform.scale(THIEFCOLORED, (THIEFCOLORED_WIDTH, THIEFCOLORED_HEIGHT))
+
+THIEFCOLOREDINVERTED = pygame.image.load(os.path.join('images', 'ThiefColoredRotated.png'))
+THIEFCOLOREDINVERTED_WIDTH, THIEFCOLOREDINVERTED_HEIGHT = 70, 80
+THIEF_INVERTED = pygame.transform.scale(THIEFCOLOREDINVERTED, (THIEFCOLOREDINVERTED_WIDTH, THIEFCOLOREDINVERTED_HEIGHT))
+
+PLAYER_LOAD = pygame.image.load(os.path.join('images', 'playerColored.png'))
+PLAYER_WIDTH, PLAYER_HEIGHT = 40, 120
+PLAYER = pygame.transform.scale(PLAYER_LOAD, (PLAYER_WIDTH, PLAYER_HEIGHT))
 
 squares = [
     pygame.Rect((D1_WIDTH, D1_HEIGHT), (CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT)),
@@ -50,14 +62,16 @@ squares = [
 
 square_states = [False] * len(squares)
 
-def draw_window(tab):
-    SCR.fill(COL)
-    SCR.blit(TAB, (tab.x, tab.y))
-    SCR.blit(MAIN, (WIDTH//2 - MAIN_WIDTH// 2, HEIGHT//2 - MAIN_HEIGHT// 2 - 106))
-
 def main():
     tab = pygame.Rect(WIDTH//2 - TAB_WIDTH//2, HEIGHT - TAB_HEIGHT, TAB_WIDTH, TAB_HEIGHT)
     clock = pygame.time.Clock()
+
+    square_size = 50
+    square_x = 550
+    square_y = D1_HEIGHT + OPENED_DOOR_HEIGHT - square_size - 32
+    speed = 3
+    direction = 1
+    z = 0
 
     paused = False
     run = True
@@ -114,16 +128,43 @@ def main():
                     else:
                         SCR.blit(OPENED_DOOR, square)
 
+            square_x += speed * direction
+
+            # Check if square has reached end of screen
+            if square_x < 550 or square_x > 1350:
+                # Move square up and flip direction
+                if z != 0:
+                    square_y -= 217
+                    direction *= -1  
+                else:
+                    square_y -= 191
+                    direction *= -1
+                
+                z += 1
+            # Draw square
+            if direction == 1:
+                SCR.blit(THIEF, (square_x, square_y))
+            else: 
+                SCR.blit(THIEF_INVERTED, (square_x, square_y))
+            # Update screen
+            pygame.display.flip()
+
+            pygame.time.wait(10)
+            
             pygame.display.update()
-            draw_window(tab)
 
         else: # game is paused
             # display pause screen
-            SCR.blit(MATRIX, (WIDTH//2 - MATRIX.get_width()//2, HEIGHT//2 - MATRIX.get_height()//2))
-            font = pygame.font.SysFont('comicsans', 60)
-            text = font.render('Game Paused (Press SPACE to Resume)', 1, (255, 255, 255))
+            SCR.blit(GREY, (WIDTH//2 - GREY.get_width()//2, HEIGHT//2 - GREY.get_height()//2))
+            font = pygame.font.SysFont('comicsans', 50)
+            text = font.render('Game Paused (Press SPACE to Resume, ALT + F4 to QUIT)', True, (255, 255, 255))
             SCR.blit(text, (WIDTH//2 - text.get_width()//2, HEIGHT//2 - text.get_height()//2))
             pygame.display.update()
+
+        SCR.fill(COL)
+        SCR.blit(TAB, (tab.x, tab.y))
+        SCR.blit(MAIN, (WIDTH//2 - MAIN_WIDTH// 2, HEIGHT//2 - MAIN_HEIGHT// 2 - 106))
+        SCR.blit(PLAYER, (1380, 265))
 
 main()
 
