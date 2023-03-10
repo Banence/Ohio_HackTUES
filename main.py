@@ -9,25 +9,25 @@ HEIGHT = 1080
 SCR = pygame.display.set_mode((WIDTH, HEIGHT))
 COL = (220, 92, 0)
 pygame.display.set_caption('Ohio Security')
-TAB_image = pygame.image.load(os.path.join('Images', 'TabletWHandsColor.png'))
+TAB_image = pygame.image.load(os.path.join('images', 'TabletWHandsColor.png')).convert_alpha()
 TAB_WIDTH, TAB_HEIGHT = 1540, 950 
 TAB = pygame.transform.scale(TAB_image, (TAB_WIDTH, TAB_HEIGHT))
 FPS = 60
 
-MAIN_IMAGE = pygame.image.load(os.path.join('Images', 'houseWColorAndPickture.png')).convert_alpha()
+MAIN_IMAGE = pygame.image.load(os.path.join('images', 'houseWColorAndPickture.png')).convert_alpha()
 MAIN_WIDTH, MAIN_HEIGHT = 1030, 740
 MAIN = pygame.transform.scale(MAIN_IMAGE, (MAIN_WIDTH, MAIN_HEIGHT))
 
 
-OPENED_DOOR_IMAGE = pygame.image.load(os.path.join('images','DoorOpenedColored.png'))
+OPENED_DOOR_IMAGE = pygame.image.load(os.path.join('images','DoorOpenedColored.png')).convert_alpha()
 OPENED_DOOR_WIDTH, OPENED_DOOR_HEIGHT = 60, 100
 OPENED_DOOR = pygame.transform.scale(OPENED_DOOR_IMAGE, (OPENED_DOOR_WIDTH, OPENED_DOOR_HEIGHT))
 
-CLOSED_DOOR_IMAGE = pygame.image.load(os.path.join('images','DoorClosedColored.png'))
+CLOSED_DOOR_IMAGE = pygame.image.load(os.path.join('images','DoorClosedColored.png')).convert_alpha()
 CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT = 20, 100
 CLOSED_DOOR = pygame.transform.scale(CLOSED_DOOR_IMAGE, (CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT))
 
-GREY_BG = pygame.image.load(os.path.join('images', 'Grey.jpg'))
+GREY_BG = pygame.image.load(os.path.join('images', 'Grey.jpg')).convert_alpha()
 GREY_BG_WIDTH, MATRIX_BG_HEIGHT = 1920, 1080
 GREY = pygame.transform.scale(GREY_BG, (GREY_BG_WIDTH, MATRIX_BG_HEIGHT))
 
@@ -39,15 +39,15 @@ D4_WIDTH, D4_HEIGHT = 880, 503
 D5_WIDTH, D5_HEIGHT = 1174, 503
 D6_WIDTH, D6_HEIGHT = 768, 285
 
-THIEFCOLORED = pygame.image.load(os.path.join('images', 'ThiefColored.png'))
+THIEFCOLORED = pygame.image.load(os.path.join('images', 'ThiefColored.png')).convert_alpha()
 THIEFCOLORED_WIDTH, THIEFCOLORED_HEIGHT = 70, 80
 THIEF = pygame.transform.scale(THIEFCOLORED, (THIEFCOLORED_WIDTH, THIEFCOLORED_HEIGHT))
 
-THIEFCOLOREDINVERTED = pygame.image.load(os.path.join('images', 'ThiefColoredRotated.png'))
+THIEFCOLOREDINVERTED = pygame.image.load(os.path.join('images', 'ThiefColoredRotated.png')).convert_alpha()
 THIEFCOLOREDINVERTED_WIDTH, THIEFCOLOREDINVERTED_HEIGHT = 70, 80
 THIEF_INVERTED = pygame.transform.scale(THIEFCOLOREDINVERTED, (THIEFCOLOREDINVERTED_WIDTH, THIEFCOLOREDINVERTED_HEIGHT))
 
-PLAYER_LOAD = pygame.image.load(os.path.join('images', 'playerColored.png'))
+PLAYER_LOAD = pygame.image.load(os.path.join('images', 'playerColored.png')).convert_alpha()
 PLAYER_WIDTH, PLAYER_HEIGHT = 40, 120
 PLAYER = pygame.transform.scale(PLAYER_LOAD, (PLAYER_WIDTH, PLAYER_HEIGHT))
 
@@ -69,14 +69,14 @@ def main():
     square_size = 50
     square_x = 550
     square_y = D1_HEIGHT + OPENED_DOOR_HEIGHT - square_size - 32
-    speed = 3
+    speed = 1.5
     direction = 1
     z = 0
 
     paused = False
     run = True
     while run:
-        clock.tick(FPS)
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
