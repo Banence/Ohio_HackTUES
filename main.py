@@ -18,6 +18,8 @@ MAIN_IMAGE = pygame.image.load(os.path.join('images', 'houseWColorAndPickture.pn
 MAIN_WIDTH, MAIN_HEIGHT = 1030, 740
 MAIN = pygame.transform.scale(MAIN_IMAGE, (MAIN_WIDTH, MAIN_HEIGHT))
 
+INTRO_FONT = pygame.font.SysFont('comicsans', 40)
+INTRO_TEXT = INTRO_FONT.render("Press ESCAPE to pause", True, (255, 255, 255))
 
 OPENED_DOOR_IMAGE = pygame.image.load(os.path.join('images','DoorOpenedColored.png')).convert_alpha()
 OPENED_DOOR_WIDTH, OPENED_DOOR_HEIGHT = 60, 100
@@ -92,7 +94,6 @@ def start_menu():
                     quit()
         pygame.display.update()
 
-
 def main():
     tab = pygame.Rect(WIDTH//2 - TAB_WIDTH//2, HEIGHT - TAB_HEIGHT, TAB_WIDTH, TAB_HEIGHT)
     clock = pygame.time.Clock()
@@ -100,9 +101,15 @@ def main():
     square_size = 50
     square_x = 550
     square_y = D1_HEIGHT + OPENED_DOOR_HEIGHT - square_size - 32
-    speed = 1
+    speed = 6
     direction = 1
     z = 0
+    count = 0
+    count2 = 0
+    count3 = 0
+    count4 = 0
+    count5 = 0
+    count6 = 0
 
     start_menu()
     paused = False
@@ -138,33 +145,51 @@ def main():
                     if i==0:
                         if image == CLOSED_DOOR:
                             SCR.blit(CLOSED_DOOR, (D1_WIDTH + OPENED_DOOR_WIDTH -14 , D1_HEIGHT))
-                        else:
+                            count += 1
+                        elif count < 1:
                             SCR.blit(OPENED_DOOR, square)
+                        else: 
+                            SCR.blit(CLOSED_DOOR, (D1_WIDTH + OPENED_DOOR_WIDTH -14 , D1_HEIGHT))
                     if i==1:
                         if image == CLOSED_DOOR:
                             SCR.blit(CLOSED_DOOR, (D2_WIDTH + OPENED_DOOR_WIDTH -15 , D2_HEIGHT))
-                        else:
+                            count2 +=1
+                        elif count2 < 1:
                             SCR.blit(OPENED_DOOR, square)
+                        else: 
+                            SCR.blit(CLOSED_DOOR, (D2_WIDTH + OPENED_DOOR_WIDTH -15 , D2_HEIGHT))
                     if i==2:
                         if image == CLOSED_DOOR:
                             SCR.blit(CLOSED_DOOR, (D3_WIDTH + OPENED_DOOR_WIDTH -17 , D3_HEIGHT))
-                        else:
+                            count3 += 1
+                        elif count3 < 1:
                             SCR.blit(OPENED_DOOR, square)
+                        else:
+                            SCR.blit(CLOSED_DOOR, (D3_WIDTH + OPENED_DOOR_WIDTH -17 , D3_HEIGHT))
                     if i==3:
                         if image == CLOSED_DOOR:
                             SCR.blit(CLOSED_DOOR, (D4_WIDTH + OPENED_DOOR_WIDTH -18 , D4_HEIGHT))
-                        else:
+                            count4 += 1
+                        elif count4 < 1:
                             SCR.blit(OPENED_DOOR, square)
+                        else:
+                            SCR.blit(CLOSED_DOOR, (D4_WIDTH + OPENED_DOOR_WIDTH -18 , D4_HEIGHT))
                     if i==4:
                         if image == CLOSED_DOOR:
                             SCR.blit(CLOSED_DOOR, (D5_WIDTH + OPENED_DOOR_WIDTH -17 , D5_HEIGHT))
-                        else:
+                            count5 += 1
+                        elif count5 < 1:
                             SCR.blit(OPENED_DOOR, square)
+                        else:
+                            SCR.blit(CLOSED_DOOR, (D5_WIDTH + OPENED_DOOR_WIDTH -17 , D5_HEIGHT))
                     if i==5:
                         if image == CLOSED_DOOR:
                             SCR.blit(CLOSED_DOOR, (D6_WIDTH + OPENED_DOOR_WIDTH -16 , D6_HEIGHT))
-                        else:
+                            count6 += 1
+                        elif count6 < 1:
                             SCR.blit(OPENED_DOOR, square)
+                        else:
+                            SCR.blit(CLOSED_DOOR, (D6_WIDTH + OPENED_DOOR_WIDTH -16 , D6_HEIGHT))
 
                 square_x += speed * direction
 
@@ -203,6 +228,7 @@ def main():
             SCR.blit(TAB, (tab.x, tab.y))
             SCR.blit(MAIN, (WIDTH//2 - MAIN_WIDTH// 2, HEIGHT//2 - MAIN_HEIGHT// 2 - 106))
             SCR.blit(PLAYER, (1380, 265))
+            SCR.blit(INTRO_TEXT, (20, 20))
         
 main()
 
