@@ -62,6 +62,37 @@ squares = [
 
 square_states = [False] * len(squares)
 
+def start_menu():
+    started = False
+    while started == False:  
+        SCR.blit(GREY, (WIDTH//2 - GREY.get_width()//2, HEIGHT//2 - GREY.get_height()//2))
+        font = pygame.font.SysFont('comicsans', 80)
+        font_start_quit = pygame.font.SysFont('comicans', 55)
+        text = font.render('Welcome to the Ohio Security Game!', True, (69, 69, 69))
+        text_start = font_start_quit.render("To ", True, (69, 69, 69))
+        text_start_green = font_start_quit.render("START", True, (0, 255, 0)) # Green color
+        text_end = font_start_quit.render("press 'S' on your keyboard", True, (69, 69, 69))
+        text_quit = font_start_quit.render("To ", True, (69, 69, 69))
+        text_quit_red = font_start_quit.render("QUIT", True, (255, 0, 0)) # Red color
+        text_quit_end = font_start_quit.render("press 'Q' on your keyboard", True, (69, 69, 69))
+        SCR.blit(text, (WIDTH//2 - text.get_width()//2, HEIGHT//2 - text.get_height()//2))
+        SCR.blit(text_start, (590, 800))
+        SCR.blit(text_start_green, (658, 800))
+        SCR.blit(text_end, (810, 800))
+        SCR.blit(text_quit, (610, 900))
+        SCR.blit(text_quit_red, (675, 900))
+        SCR.blit(text_quit_end, (800, 900))
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_s:
+                    started = True
+                    break
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
+        pygame.display.update()
+
+
 def main():
     tab = pygame.Rect(WIDTH//2 - TAB_WIDTH//2, HEIGHT - TAB_HEIGHT, TAB_WIDTH, TAB_HEIGHT)
     clock = pygame.time.Clock()
@@ -69,106 +100,107 @@ def main():
     square_size = 50
     square_x = 550
     square_y = D1_HEIGHT + OPENED_DOOR_HEIGHT - square_size - 32
-    speed = 1.5
+    speed = 1
     direction = 1
     z = 0
 
+    start_menu()
     paused = False
     run = True
     while run:
-        clock.tick(60)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                for i, square in enumerate(squares):
-                    if square.collidepoint(event.pos):
-                        square_states[i] = not square_states[i]
-            
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    paused = True # toggle pause state
-                elif event.key == pygame.K_SPACE:
-                    paused = False # resume game
-                elif event.key == pygame.K_q and paused == True:
+            clock.tick(FPS)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     pygame.quit()
-                    quit()
-
-        if not paused: # game runs only if not paused
-            for i, square in enumerate(squares):
-                if square_states[i]: 
-                    image = CLOSED_DOOR    
-                else:
-                    image = OPENED_DOOR
-                if i==0:
-                    if image == CLOSED_DOOR:
-                        SCR.blit(CLOSED_DOOR, (D1_WIDTH + OPENED_DOOR_WIDTH -14 , D1_HEIGHT))
-                    else:
-                        SCR.blit(OPENED_DOOR, square)
-                if i==1:
-                    if image == CLOSED_DOOR:
-                        SCR.blit(CLOSED_DOOR, (D2_WIDTH + OPENED_DOOR_WIDTH -15 , D2_HEIGHT))
-                    else:
-                        SCR.blit(OPENED_DOOR, square)
-                if i==2:
-                    if image == CLOSED_DOOR:
-                        SCR.blit(CLOSED_DOOR, (D3_WIDTH + OPENED_DOOR_WIDTH -17 , D3_HEIGHT))
-                    else:
-                        SCR.blit(OPENED_DOOR, square)
-                if i==3:
-                    if image == CLOSED_DOOR:
-                        SCR.blit(CLOSED_DOOR, (D4_WIDTH + OPENED_DOOR_WIDTH -18 , D4_HEIGHT))
-                    else:
-                        SCR.blit(OPENED_DOOR, square)
-                if i==4:
-                    if image == CLOSED_DOOR:
-                        SCR.blit(CLOSED_DOOR, (D5_WIDTH + OPENED_DOOR_WIDTH -17 , D5_HEIGHT))
-                    else:
-                        SCR.blit(OPENED_DOOR, square)
-                if i==5:
-                    if image == CLOSED_DOOR:
-                        SCR.blit(CLOSED_DOOR, (D6_WIDTH + OPENED_DOOR_WIDTH -16 , D6_HEIGHT))
-                    else:
-                        SCR.blit(OPENED_DOOR, square)
-
-            square_x += speed * direction
-
-            # Check if square has reached end of screen
-            if square_x < 550 or square_x > 1300:
-                # Move square up and flip direction
-                if z != 0:
-                    square_y -= 217
-                    direction *= -1  
-                else:
-                    square_y -= 191
-                    direction *= -1
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    for i, square in enumerate(squares):
+                        if square.collidepoint(event.pos):
+                            square_states[i] = not square_states[i]
                 
-                z += 1
-            # Draw square
-            if direction == 1:
-                SCR.blit(THIEF, (square_x, square_y))
-            else: 
-                SCR.blit(THIEF_INVERTED, (square_x, square_y))
-            # Update screen
-            pygame.display.flip()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        paused = True # toggle pause state
+                    elif event.key == pygame.K_SPACE:
+                        paused = False # resume game
+                    elif event.key == pygame.K_q and paused == True:
+                        pygame.quit()
+                        quit()
 
-            pygame.time.wait(10)
-            
-            pygame.display.update()
+            if not paused: # game runs only if not paused
+                for i, square in enumerate(squares):
+                    if square_states[i]: 
+                        image = CLOSED_DOOR    
+                    else:
+                        image = OPENED_DOOR
+                    if i==0:
+                        if image == CLOSED_DOOR:
+                            SCR.blit(CLOSED_DOOR, (D1_WIDTH + OPENED_DOOR_WIDTH -14 , D1_HEIGHT))
+                        else:
+                            SCR.blit(OPENED_DOOR, square)
+                    if i==1:
+                        if image == CLOSED_DOOR:
+                            SCR.blit(CLOSED_DOOR, (D2_WIDTH + OPENED_DOOR_WIDTH -15 , D2_HEIGHT))
+                        else:
+                            SCR.blit(OPENED_DOOR, square)
+                    if i==2:
+                        if image == CLOSED_DOOR:
+                            SCR.blit(CLOSED_DOOR, (D3_WIDTH + OPENED_DOOR_WIDTH -17 , D3_HEIGHT))
+                        else:
+                            SCR.blit(OPENED_DOOR, square)
+                    if i==3:
+                        if image == CLOSED_DOOR:
+                            SCR.blit(CLOSED_DOOR, (D4_WIDTH + OPENED_DOOR_WIDTH -18 , D4_HEIGHT))
+                        else:
+                            SCR.blit(OPENED_DOOR, square)
+                    if i==4:
+                        if image == CLOSED_DOOR:
+                            SCR.blit(CLOSED_DOOR, (D5_WIDTH + OPENED_DOOR_WIDTH -17 , D5_HEIGHT))
+                        else:
+                            SCR.blit(OPENED_DOOR, square)
+                    if i==5:
+                        if image == CLOSED_DOOR:
+                            SCR.blit(CLOSED_DOOR, (D6_WIDTH + OPENED_DOOR_WIDTH -16 , D6_HEIGHT))
+                        else:
+                            SCR.blit(OPENED_DOOR, square)
 
-        else: # game is paused
-            # display pause screen
-            SCR.blit(GREY, (WIDTH//2 - GREY.get_width()//2, HEIGHT//2 - GREY.get_height()//2))
-            font = pygame.font.SysFont('comicsans', 50)
-            text = font.render('Game Paused (Press "SPACE" to resume or "Q" to QUIT)', True, (69, 69, 69))
-            SCR.blit(text, (WIDTH//2 - text.get_width()//2, HEIGHT//2 - text.get_height()//2))
-            pygame.display.update()
+                square_x += speed * direction
 
-        SCR.fill(COL)
-        SCR.blit(TAB, (tab.x, tab.y))
-        SCR.blit(MAIN, (WIDTH//2 - MAIN_WIDTH// 2, HEIGHT//2 - MAIN_HEIGHT// 2 - 106))
-        SCR.blit(PLAYER, (1380, 265))
+                # Check if square has reached end of screen
+                if square_x < 550 or square_x > 1300:
+                    # Move square up and flip direction
+                    if z != 0:
+                        square_y -= 217
+                        direction *= -1  
+                    else:
+                        square_y -= 191
+                        direction *= -1
+                    
+                    z += 1
+                # Draw square
+                if direction == 1:
+                    SCR.blit(THIEF, (square_x, square_y))
+                else: 
+                    SCR.blit(THIEF_INVERTED, (square_x, square_y))
+                # Update screen
+                pygame.display.flip()
+
+                pygame.time.wait(10)
+                
+                pygame.display.update()
+
+            else: # game is paused
+                # display pause screen
+                SCR.blit(GREY, (WIDTH//2 - GREY.get_width()//2, HEIGHT//2 - GREY.get_height()//2))
+                font = pygame.font.SysFont('comicsans', 50)
+                text = font.render('Game Paused (Press "SPACE" to resume or "Q" to QUIT)', True, (69, 69, 69))
+                SCR.blit(text, (WIDTH//2 - text.get_width()//2, HEIGHT//2 - text.get_height()//2))
+                pygame.display.update()
+
+            SCR.fill(COL)
+            SCR.blit(TAB, (tab.x, tab.y))
+            SCR.blit(MAIN, (WIDTH//2 - MAIN_WIDTH// 2, HEIGHT//2 - MAIN_HEIGHT// 2 - 106))
+            SCR.blit(PLAYER, (1380, 265))
         
 main()
 
