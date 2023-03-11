@@ -101,7 +101,7 @@ def main():
     square_size = 50
     square_x = 550
     square_y = D1_HEIGHT + OPENED_DOOR_HEIGHT - square_size - 32
-    speed = 6
+    speed = 0.2
     direction = 1
     z = 0
     count = 0
@@ -110,6 +110,20 @@ def main():
     count4 = 0
     count5 = 0
     count6 = 0
+    collided1 = False
+    collided2 = False
+    collided3 = False
+    collided4 = False
+    collided5 = False
+    collided6 = False
+    collision_time = 0
+
+    rect1 = pygame.Rect(D1_WIDTH + OPENED_DOOR_WIDTH, D1_HEIGHT , CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT)
+    rect2 = pygame.Rect(D2_WIDTH + OPENED_DOOR_WIDTH, D2_HEIGHT , CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT)
+    rect3 = pygame.Rect(D3_WIDTH + OPENED_DOOR_WIDTH, D3_HEIGHT , CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT)
+    rect4 = pygame.Rect(D4_WIDTH + OPENED_DOOR_WIDTH, D4_HEIGHT , CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT)
+    rect5 = pygame.Rect(D5_WIDTH + OPENED_DOOR_WIDTH, D5_HEIGHT , CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT)
+    rect6 = pygame.Rect(D6_WIDTH + OPENED_DOOR_WIDTH, D6_HEIGHT , CLOSED_DOOR_WIDTH, CLOSED_DOOR_HEIGHT)
 
     start_menu()
     paused = False
@@ -191,7 +205,20 @@ def main():
                         else:
                             SCR.blit(CLOSED_DOOR, (D6_WIDTH + OPENED_DOOR_WIDTH -16 , D6_HEIGHT))
 
-                square_x += speed * direction
+                #Check if square has collided with rectangle
+                
+                                 
+                    if not collided1 and rect1.colliderect(pygame.Rect(square_x, square_y, THIEFCOLOREDINVERTED_WIDTH, THIEFCOLORED_HEIGHT)):
+                        if image == CLOSED_DOOR:
+                            collided1 = True
+                            collision_time = pygame.time.get_ticks()
+                        else:
+                            collided1 = False                    
+                    
+                    if not collided1 or pygame.time.get_ticks() - collision_time >= 10000:
+                    
+                        square_x += speed * direction
+                    time = 0
 
                 # Check if square has reached end of screen
                 if square_x < 550 or square_x > 1300:
